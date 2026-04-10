@@ -24,7 +24,9 @@ A full-stack web application for managing employee leaves and reimbursement clai
 | Auth     | JWT (jsonwebtoken + bcryptjs)           |
 
 ## Getting Started
-
+ - Demo credential for admin
+   - username/email - admin@gmail.com
+   - pass - 123456
 ### Prerequisites
 
 - Node.js v18+
