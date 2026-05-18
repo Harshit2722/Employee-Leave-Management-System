@@ -7,11 +7,14 @@ const { loginUser, registerUser } = require("../controllers/authController")
 const validate = require("../middleware/validate")
 const { registerSchema, loginSchema } = require("../validators/auth.validator")
 
+// added rate limiter
+const { authLimiter } = require("../middleware/rateLimiter")
+
 //  register route
-router.post("/register", validate(registerSchema), registerUser)
+router.post("/register", authLimiter, validate(registerSchema), registerUser)
 
 //  login user
 
-router.post("/login", validate(loginSchema), loginUser)
+router.post("/login", authLimiter, validate(loginSchema), loginUser)
 
 module.exports = router
