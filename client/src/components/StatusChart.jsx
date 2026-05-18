@@ -64,7 +64,7 @@ const StatusChart = ({ title, data }) => {
               dataKey="value"
               stroke="none"
             >
-              {chartData.map((entry, i) => (
+              {chartData.map((entry) => (
                 <Cell
                   key={entry.name}
                   fill={COLORS[entry.name.toLowerCase()]}
