@@ -25,8 +25,8 @@ A full-stack web application for managing employee leaves and reimbursement clai
 
 ## Getting Started
  - Demo credential for admin
-   - username/email - admin@gmail.com
-   - pass - 123456
+   - username/email - test@gmail.com
+   - pass - test123456
 ### Prerequisites
 
 - Node.js v18+
