@@ -108,10 +108,11 @@ const LandingPage = () => {
             {features.map((f, i) => (
               <div
                 key={i}
-                className="rounded-xl border p-5 transition-shadow hover:shadow-md"
+                className="rounded-xl border p-5 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]"
                 style={{
                   backgroundColor: "var(--bg-card)",
                   borderColor: "var(--border-color)",
+                  boxShadow: "0 0 0 rgba(0,0,0,0)",
                 }}
               >
                 <div

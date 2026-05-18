@@ -7,8 +7,11 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 *
 const { applyReimbursement, getReimbursement, getAllReimbursement, updateReimbursement, updateBill, deleteBill } = require("../controllers/reimbursementController")
 const { authMiddleware, checkRole } = require("../middleware/authMiddleware")
 
+const validate = require("../middleware/validate")
+const { reimbursementSchema } = require("../validators/reimbursement.validator")
 
-router.post("/applyReimbursement", authMiddleware, checkRole(["employee", "manager"]), upload.single("bill"), applyReimbursement)
+router.post("/applyReimbursement", authMiddleware, checkRole(["employee", "manager"]), upload.single("bill"),
+    validate(reimbursementSchema), applyReimbursement)
 
 router.get("/getReimbursement", authMiddleware, checkRole(['employee', 'manager']), getReimbursement)
 
