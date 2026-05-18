@@ -23,7 +23,7 @@ const deleteFromImageKit = async (fileId) => {
 };
 
 //  apply for reimbursement
-const applyReimbursement = async (req, res) => {
+const applyReimbursement = async (req, res, next) => {
   try {
     const { amount, expenseDate, description } = req.body;
 
@@ -51,28 +51,26 @@ const applyReimbursement = async (req, res) => {
       reimbursement,
     });
   } catch (err) {
-    return res.status(500).json({
-      message: err.message,
-    });
+    next(err);
   }
 };
 
 //  getting all reimbursement from db for a particular user
 
-const getReimbursement = async (req, res) => {
+const getReimbursement = async (req, res, next) => {
   try {
     const reimbursements = await Reimbursement.find({ user: req.user.id }).sort(
       { createdAt: -1 },
     );
     return res.status(200).json(reimbursements);
   } catch (err) {
-    return res.status(404).json({ message: err.message });
+    next(err);
   }
 };
 
 //  updating reimbursement status
 
-const updateReimbursement = async (req, res) => {
+const updateReimbursement = async (req, res, next) => {
   try {
     const reimbursementId = req.params.id;
     const { status } = req.body;
@@ -100,24 +98,24 @@ const updateReimbursement = async (req, res) => {
 
     return res.status(200).json({ message: `Reimbursement ${status} successfully`, reimbursement });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 
 //  get all reimbursement for admin or manager
 
-const getAllReimbursement = async (req, res) => {
+const getAllReimbursement = async (req, res, next) => {
   try {
     const reimbursements = await Reimbursement.find({ user: { $ne: req.user.id } }).populate("user", "email").sort({ createdAt: -1 });
     return res.status(200).json({ reimbursements });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 
 //  update bill on an existing reimbursement
 
-const updateBill = async (req, res) => {
+const updateBill = async (req, res, next) => {
   try {
     const reimbursement = await Reimbursement.findById(req.params.id);
     if (!reimbursement) {
@@ -146,13 +144,13 @@ const updateBill = async (req, res) => {
 
     return res.status(200).json({ message: "Bill updated successfully", reimbursement });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 
 //  delete bill from a reimbursement
 
-const deleteBill = async (req, res) => {
+const deleteBill = async (req, res, next) => {
   try {
     const reimbursement = await Reimbursement.findById(req.params.id);
     if (!reimbursement) {
@@ -174,7 +172,7 @@ const deleteBill = async (req, res) => {
 
     return res.status(200).json({ message: "Bill deleted successfully", reimbursement });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    next(err);
   }
 };
 

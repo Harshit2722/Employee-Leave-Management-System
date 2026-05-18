@@ -2,11 +2,10 @@ const jwt = require("jsonwebtoken")
 
 const authMiddleware = async (req, res, next) => {
     try {
-        
         //  get token from req header
         const header = req.headers.authorization
         if (!header || !header.startsWith("Bearer ")) {
-            return res.status(401).json({message:"No token , auth denied"})
+            return res.status(401).json({ message: "No token , auth denied" })
         }
         //  extracting token 
         const token = header.split(" ")[1];
@@ -17,14 +16,17 @@ const authMiddleware = async (req, res, next) => {
         next()
     }
     catch (err) {
-        res.status(401).json({message:"Token not valid"})
+        next(err);
     }
 }
 
 const checkRole = (roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Access Denied: You do not have permission" });
+            return res.status(403).json({
+                success: false,
+                message: "Access Denied: You do not have permission"
+            });
         }
         next();
     };
