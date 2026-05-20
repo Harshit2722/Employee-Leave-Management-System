@@ -27,8 +27,8 @@ const UserTable = ({ users, onUpdateRole, onDeleteUser }) => {
   const filteredUsers = useMemo(() => {
     return users.filter((u) => {
       const matchesSearch =
-        u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchTerm.toLowerCase());
+  u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  u.email?.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesRole =
         roleFilter === "all" || u.role === roleFilter;
@@ -186,9 +186,9 @@ const UserTable = ({ users, onUpdateRole, onDeleteUser }) => {
                         }}
                       >
                         {u.role === "Approval-Pending" && (
-                          <option value="pending">
-                            Approval Pending
-                          </option>
+                          <option value="Approval-Pending">
+                              Approval Pending
+                           </option>
                         )}
                         <option value="employee">Employee</option>
                         <option value="manager">Manager</option>
