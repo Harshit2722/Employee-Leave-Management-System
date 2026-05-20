@@ -1,6 +1,6 @@
 const SummaryCard = ({ icon, count, label }) => {
   return (
-    <div className="rounded-xl border px-2 py-4 flex-col"
+    <div className="flex flex-col rounded-xl border px-2 py-4"
       style={{
         backgroundColor: "var(--bg-card)",
         borderColor: "var(--border-color)",
