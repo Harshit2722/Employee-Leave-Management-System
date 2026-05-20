@@ -103,22 +103,6 @@ const UserTable = ({ users, onUpdateRole, onDeleteUser }) => {
   Showing {filteredUsers.length} user
   {filteredUsers.length !== 1 ? "s" : ""}
 </div>
-        <select
-          value={roleFilter}
-          onChange={(e) => setRoleFilter(e.target.value)}
-          className="rounded-lg border px-4 py-2 text-sm outline-none"
-          style={{
-            borderColor: "var(--border-color)",
-            backgroundColor: "var(--bg-card)",
-            color: "var(--text-primary)",
-          }}
-        >
-          <option value="all">All Roles</option>
-          <option value="employee">Employee</option>
-          <option value="manager">Manager</option>
-          <option value="admin">Admin</option>
-          <option value="Approval-Pending">Approval Pending</option>
-        </select>
       
 
       <div
