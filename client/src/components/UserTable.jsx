@@ -28,7 +28,8 @@ const UserTable = ({ users, onUpdateRole, onDeleteUser }) => {
     return users.filter((u) => {
       const matchesSearch =
   u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  u.email?.toLowerCase().includes(searchTerm.toLowerCase());
+  u.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  u.employeeId?.toString().toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesRole =
         roleFilter === "all" || u.role === roleFilter;
