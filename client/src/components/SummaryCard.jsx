@@ -19,7 +19,7 @@ const SummaryCard = ({ icon, count, label }) => {
         </p>
 
       </div>
-      <div className="justify-center items-center truncate">
+      <div>
         <p className="text-xs text-center wrap-break-word" style={{ color: "var(--text-secondary)" }}>
           {label}
         </p>
