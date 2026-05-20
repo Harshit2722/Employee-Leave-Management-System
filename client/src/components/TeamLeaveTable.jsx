@@ -1,7 +1,81 @@
 import StatusBadge from "./StatusBadge";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const TeamLeaveTable = ({ leaves, onUpdate }) => {
+    const exportCSV = () => {
+    const headers = [
+      "Employee",
+      "From Date",
+      "To Date",
+      "Reason",
+      "Status",
+    ];
+
+    const rows = leaves.map((l) => [
+      l.user?.email || "N/A",
+      new Date(l.fromDate).toLocaleDateString(),
+      new Date(l.toDate).toLocaleDateString(),
+      l.reason,
+      l.status,
+    ]);
+
+    const csvContent =
+      [headers, ...rows]
+        .map((e) => e.join(","))
+        .join("\n");
+
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "leave-records.csv");
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportPDF = () => {
+    const doc = new jsPDF();
+
+    doc.text("Employee Leave Records", 14, 15);
+
+    autoTable(doc, {
+      startY: 22,
+      head: [["Employee", "From", "To", "Reason", "Status"]],
+      body: leaves.map((l) => [
+        l.user?.email || "N/A",
+        new Date(l.fromDate).toLocaleDateString(),
+        new Date(l.toDate).toLocaleDateString(),
+        l.reason,
+        l.status,
+      ]),
+    });
+
+    doc.save("leave-records.pdf");
+  };
   return (
+    <>
+  <div className="mb-4 flex flex-wrap gap-3">
+    <button
+      onClick={exportCSV}
+      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+    >
+      Export CSV
+    </button>
+
+    <button
+      onClick={exportPDF}
+      className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+    >
+      Export PDF
+    </button>
+  </div>
     <div
       className="overflow-x-auto rounded-xl border"
       style={{
@@ -90,6 +164,7 @@ const TeamLeaveTable = ({ leaves, onUpdate }) => {
         </table>
       )}
     </div>
+    </>
   );
 };
 
