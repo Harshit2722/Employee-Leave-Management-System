@@ -20,10 +20,20 @@ const TeamLeaveTable = ({ leaves, onUpdate }) => {
       l.status,
     ]);
 
-    const csvContent =
-      [headers, ...rows]
-        .map((e) => e.join(","))
-        .join("\n");
+    const escapeCSVCell = (cell) => {
+  const value = String(cell ?? "");
+
+  const safeValue = /^[=+\-@]/.test(value)
+    ? `'${value}`
+    : value;
+
+  return `"${safeValue.replace(/"/g, '""')}"`;
+};
+
+const csvContent =
+  [headers, ...rows]
+    .map((row) => row.map(escapeCSVCell).join(","))
+    .join("\n");
 
     const blob = new Blob([csvContent], {
       type: "text/csv;charset=utf-8;",
