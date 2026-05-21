@@ -1,8 +1,14 @@
+import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 const TeamLeaveTable = ({ leaves, onUpdate }) => {
+    const [statusFilter, setStatusFilter] = useState("all");
+    const filteredLeaves =
+  statusFilter === "all"
+    ? leaves
+    : leaves.filter((l) => l.status === statusFilter);
     const exportCSV = () => {
     const headers = [
       "Employee",
@@ -12,7 +18,7 @@ const TeamLeaveTable = ({ leaves, onUpdate }) => {
       "Status",
     ];
 
-    const rows = leaves.map((l) => [
+    const rows = filteredLeaves.map((l) => [
       l.user?.email || "N/A",
       new Date(l.fromDate).toLocaleDateString(),
       new Date(l.toDate).toLocaleDateString(),
@@ -58,7 +64,7 @@ const csvContent =
     autoTable(doc, {
       startY: 22,
       head: [["Employee", "From", "To", "Reason", "Status"]],
-      body: leaves.map((l) => [
+      body: filteredLeaves.map((l) => [
         l.user?.email || "N/A",
         new Date(l.fromDate).toLocaleDateString(),
         new Date(l.toDate).toLocaleDateString(),
@@ -72,6 +78,21 @@ const csvContent =
   return (
     <>
   <div className="mb-4 flex flex-wrap gap-3">
+    <select
+  value={statusFilter}
+  onChange={(e) => setStatusFilter(e.target.value)}
+  className="rounded-lg border px-3 py-2 text-sm outline-none"
+  style={{
+    borderColor: "var(--border-color)",
+    backgroundColor: "var(--bg-card)",
+    color: "var(--text-primary)",
+  }}
+>
+  <option value="all">All Status</option>
+  <option value="pending">Pending</option>
+  <option value="approved">Approved</option>
+  <option value="rejected">Rejected</option>
+</select>
     <button
       onClick={exportCSV}
       className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
@@ -118,7 +139,7 @@ const csvContent =
             </tr>
           </thead>
           <tbody>
-            {leaves.map((l) => (
+            {filteredLeaves.map((l) => (
               <tr
                 key={l._id}
                 style={{ borderBottom: "1px solid var(--border-color)" }}
