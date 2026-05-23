@@ -7,6 +7,9 @@ import { FiUser, FiMail, FiLock, FiAlertCircle, FiEye, FiEyeOff } from "react-ic
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+const RegisterPage = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -122,6 +125,7 @@ const RegisterPage = () => {
             >
               Password
             </label>
+
             <div
               className="flex items-center gap-2 rounded-lg border px-3 py-2"
               style={{
@@ -130,6 +134,7 @@ const RegisterPage = () => {
               }}
             >
               <FiLock size={14} style={{ color: "var(--text-secondary)" }} />
+
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
