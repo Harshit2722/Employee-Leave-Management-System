@@ -151,6 +151,8 @@ const RegisterPage = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
                 className="cursor-pointer"
               >
                 {showPassword ? (
