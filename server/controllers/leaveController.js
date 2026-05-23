@@ -1,9 +1,17 @@
 const Leave = require("../models/Leave")
 
-
 const applyLeave = async (req, res)=> {
     try {
         const { fromDate, toDate, reason } = req.body
+
+        //  validating dates
+        if (!fromDate || !toDate) {
+            return res.status(400).json({ message: "fromDate and toDate are required" })
+        }
+
+        if (new Date(toDate) < new Date(fromDate)) {
+            return res.status(400).json({ message: "toDate cannot be before fromDate" })
+        }
         
         //  creating leave
         const leave = await Leave.create({

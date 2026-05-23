@@ -3,7 +3,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
-import { FiUser, FiMail, FiLock, FiAlertCircle } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiAlertCircle, FiEye, FiEyeOff } from "react-icons/fi";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -13,8 +13,6 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -147,19 +145,14 @@ const RegisterPage = () => {
                 className="w-full bg-transparent text-sm outline-none"
                 style={{ color: "var(--text-primary)" }}
               />
-
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                className="flex items-center justify-center text-gray-500 hover:text-gray-700 focus:outline-none"
+                style={{ color: "var(--text-secondary)" }}
                 aria-label={showPassword ? "Hide password" : "Show password"}
-                aria-pressed={showPassword}
-                className="cursor-pointer"
               >
-                {showPassword ? (
-                  <FiEyeOff size={18} style={{ color: "var(--text-secondary)" }} />
-                ) : (
-                  <FiEye size={18} style={{ color: "var(--text-secondary)" }} />
-                )}
+                {showPassword ? <FiEyeOff size={14} /> : <FiEye size={14} />}
               </button>
             </div>
           </div>

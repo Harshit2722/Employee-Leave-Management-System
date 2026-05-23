@@ -1,13 +1,14 @@
-const dotenv=require("dotenv")
+const dotenv = require("dotenv")
 dotenv.config()
 
 const express = require("express")
 const cors = require("cors")
 const connectDb = require("./config/db");
 const authRoutes = require("./routes/authRoutes")
-const reimbursementRoute=require("./routes/reimbursemnetRoute")
+const errorMiddleware = require("./middleware/errorMiddleware")
+const reimbursementRoute = require("./routes/reimbursemnetRoute")
 const leaveRoute = require("./routes/leaveRoute")
-const userRoleRoute=require("./routes/userRoutes")
+const userRoleRoute = require("./routes/userRoutes")
 const path = require("path");
 
 connectDb()
@@ -21,6 +22,9 @@ app.use("/api/auth", authRoutes)
 app.use("/api/leave", leaveRoute);
 app.use("/api/reimbursement", reimbursementRoute)
 app.use("/api/user", userRoleRoute)
+
+// Global error Middleware
+app.use(errorMiddleware);
 
 // Unified Deployment Logic
 if (process.env.NODE_ENV === "production") {
